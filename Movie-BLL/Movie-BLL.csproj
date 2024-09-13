@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Movie-Common\Movie-Common.csproj" />
+    <ProjectReference Include="..\Movie-DAL\Movie-DAL.csproj" />
+  </ItemGroup>
+
 </Project>
