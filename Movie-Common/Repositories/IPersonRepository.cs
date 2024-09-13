@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Movie_Common.Repositories
 {
-    public interface IPersonRepository : ICRUDRepository<IPerson, int>
+    public interface IPersonRepository<TPerson> : ICRUDRepository<TPerson, int> where TPerson : IPerson
     {
 
     }
