@@ -1,0 +1,4 @@
+﻿CREATE TABLE [dbo].[Category]
+(
+	[CatName] NVARCHAR(32) NOT NULL PRIMARY KEY
+)

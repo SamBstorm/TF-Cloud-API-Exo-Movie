@@ -1,0 +1,5 @@
+﻿CREATE PROCEDURE [dbo].[SP_Movie_GetAll]
+AS
+BEGIN
+	SELECT * FROM [Movie]
+END

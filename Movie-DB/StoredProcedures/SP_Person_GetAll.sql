@@ -1,0 +1,5 @@
+﻿CREATE PROCEDURE [dbo].[SP_Person_GetAll]
+AS
+BEGIN
+	SELECT * FROM [Person]
+END
