@@ -10,5 +10,6 @@ namespace Movie_API.Models
         public string? Synopsis { get; set; }
         public DateTime ReleaseDate { get; set; }
         public Category MainCategory { get; set; }
+        public IEnumerable<ActorInMovie>? Actors { get; set; }
     }
 }

@@ -37,6 +37,31 @@ namespace Movie_BLL.Services
             return _repository.Get(id).ToBLL();
         }
 
+        public IEnumerable<string> GetAllRoles(int id)
+        {
+            return _repository.GetAllRoles(id);
+        }
+
+        public IEnumerable<string> GetAllRolesOnMovieId(int personId, int movieId)
+        {
+            return _repository.GetAllRolesOnMovieId(personId, movieId);
+        }
+
+        public IEnumerable<Person> GetByCharacterName(string characterName)
+        {
+            return _repository.GetByCharacterName(characterName).Select(e => e.ToBLL()) ;
+        }
+
+        public IEnumerable<Person> GetByMovieId(int id)
+        {
+            return _repository.GetByMovieId(id).Select(e => e.ToBLL()) ;
+        }
+
+        public int SetRole(int personId, int movieId, string characterName)
+        {
+            return _repository.SetRole(personId, movieId, characterName);
+        }
+
         public void Update(int id, Person entity)
         {
             _repository.Update(id, entity.ToDAL());

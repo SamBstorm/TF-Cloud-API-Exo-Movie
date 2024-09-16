@@ -91,6 +91,27 @@ namespace Movie_DAL.Services
             }
         }
 
+        public IEnumerable<Movie> GetByPersonId(int id)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandType = System.Data.CommandType.Text;
+                    command.CommandText = "SELECT [Movie].* FROM [Movie] JOIN [Role] ON [Movie].[MovieId] = [Role].[MovieId] WHERE [Role].[PersonId] = @id";
+                    command.Parameters.AddWithValue("id", id);
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            yield return reader.ToMovie();
+                        }
+                    }
+                }
+            }
+        }
+
         public void Update(int id, Movie entity)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))

@@ -18,14 +18,37 @@ namespace Movie_API.Controllers
         {
             _personRepository = personRepository;
         }
+        [HttpPost("{id}")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(typeof(ErrorModel), 400)]
+        public IActionResult SetActor(int id, SetActorPost body)
+        {
+            try
+            {
+                _personRepository.SetRole(id, body.MovieId, body.CharacterName);
+                return CreatedAtAction("GetDetailed", "Movie", new { id = body.MovieId }, null);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ErrorModel() { Message = ex.Message });
+            }
+        }
+
 
         // GET: api/<PersonController>
         [HttpGet]
+        [ProducesResponseType(typeof(SuccessContentModel<IEnumerable<Person>>), 200)]
+        [ProducesResponseType(typeof(ErrorModel), 400)]
+        [Produces("text/json", "text/xml")]
         public IActionResult Get()
         {
             try
             {
-                return Ok(_personRepository.Get().Select(e => e.ToModel()));
+                return Ok(
+                    new SuccessContentModel<IEnumerable<Person>>()
+                    {
+                        Result = _personRepository.Get().Select(e => e.ToModel())
+                    });
             }
             catch (Exception ex)
             {

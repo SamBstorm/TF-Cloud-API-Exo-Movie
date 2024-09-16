@@ -51,10 +51,39 @@ namespace Movie_API.Mapper
                 SubTitle = entity.SubTitle,
                 Synopsis = entity.Synopsis,
                 ReleaseDate = entity.ReleaseDate,
-                MainCategory = entity.MainCategory
+                MainCategory = entity.MainCategory,
+                Actors = null
             };
         }
 
+        public static Movie ToDetailedModel(this BLL.Movie entity)
+        {
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
+            return new Movie()
+            {
+                MovieId = entity.MovieId,
+                Title = entity.Title,
+                SubTitle = entity.SubTitle,
+                Synopsis = entity.Synopsis,
+                ReleaseDate = entity.ReleaseDate,
+                MainCategory = entity.MainCategory,
+                Actors = entity.Actors.Select(e => e.ToModel())
+            };
+        }
+
+        #endregion
+
+        #region Actor
+
+        public static ActorInMovie ToModel(this BLL.Actor entity)
+        {
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
+            return new ActorInMovie()
+            {
+                Person = entity.Person.ToModel(),
+                CharactersName = entity.CharactersName
+            };
+        }
         #endregion
     }
 }

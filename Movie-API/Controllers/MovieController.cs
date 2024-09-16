@@ -14,18 +14,24 @@ namespace Movie_API.Controllers
     {
         private IMovieRepository<BLL.Movie> _movieRepository;
 
-        public MovieController(IMovieRepository<BLL.Movie> movieRepository)
+        public MovieController(IMovieRepository<BLL.Movie> movieRepository, IPersonRepository<BLL.Person> personRepository)
         {
             _movieRepository = movieRepository;
         }
 
         // GET: api/<MovieController>
         [HttpGet]
+        [ProducesResponseType(typeof(SuccessContentArrayModel<IEnumerable<Movie>, Movie>), 200)]
+        [ProducesResponseType(typeof(ErrorModel), 400)]
+        [Produces("text/json","text/xml")]
         public IActionResult Get()
         {
             try
             {
-                return Ok(_movieRepository.Get().Select(e => e.ToModel()));
+                return Ok(
+                    new SuccessContentArrayModel<IEnumerable<Movie>, Movie>() { 
+                        Result = _movieRepository.Get().Select(e => e.ToModel()) 
+                    });
             }
             catch (Exception ex)
             {
@@ -35,11 +41,39 @@ namespace Movie_API.Controllers
 
         // GET api/<MovieController>/5
         [HttpGet("{id}")]
+        [ProducesResponseType<SuccessContentModel<Movie>>(200)]
+        [ProducesResponseType<ErrorModel>(400)]
+        [Produces("text/json", "text/xml")]
         public IActionResult Get(int id)
         {
             try
             {
-                return Ok(_movieRepository.Get(id).ToModel());
+                
+                return Ok(
+                    new SuccessContentModel<Movie>()
+                    {
+                        Result = _movieRepository.Get(id).ToModel()
+                    });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ErrorModel() { Message = ex.Message });
+            }
+        }
+        [HttpGet("detailed/{id}")]
+        [ProducesResponseType<SuccessContentModel<Movie>>(200)]
+        [ProducesResponseType<ErrorModel>(400)]
+        [Produces("text/json", "text/xml")]
+        public IActionResult GetDetailed(int id)
+        {
+            try
+            {
+
+                return Ok(
+                    new SuccessContentModel<Movie>()
+                    {
+                        Result = _movieRepository.Get(id).ToDetailedModel()
+                    });
             }
             catch (Exception ex)
             {
@@ -49,6 +83,9 @@ namespace Movie_API.Controllers
 
         // POST api/<MovieController>
         [HttpPost]
+        [ProducesResponseType(201)]
+        [ProducesResponseType<ErrorModel>(400)]
+        [Produces("text/json", "text/xml")]
         public IActionResult Post(MoviePost value)
         {
             try
@@ -64,6 +101,9 @@ namespace Movie_API.Controllers
 
         // PUT api/<MovieController>/5
         [HttpPut("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType<ErrorModel>(400)]
+        [Produces("text/json","text/xml")]
         public IActionResult Put(int id, MoviePost value)
         {
             try
@@ -79,6 +119,9 @@ namespace Movie_API.Controllers
 
         // DELETE api/<MovieController>/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType<ErrorModel>(400)]
+        [Produces("text/json", "text/xml")]
         public IActionResult Delete(int id)
         {
             try

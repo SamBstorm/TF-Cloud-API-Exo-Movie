@@ -51,6 +51,8 @@ namespace Movie_BLL.Entities
         public DateTime ReleaseDate  { get; set; }
         public Category MainCategory { get; set; }
 
+        public IEnumerable<Actor> Actors {  get; set; }
+
         public Movie(int movieId, string title, DateTime releaseDate, Category mainCategory, string? subTitle = null, string? synopsis = null) : this(title, releaseDate, mainCategory, subTitle, synopsis)
         {
             MovieId = movieId;
@@ -73,6 +75,12 @@ namespace Movie_BLL.Entities
             _synopsis = movie.Synopsis;
             ReleaseDate = movie.ReleaseDate;
             MainCategory = Enum.Parse<Category>(movie.MainCategory);
+            Actors = null;
+        }
+
+        public Movie(Movie_DAL.Entities.Movie movie, IEnumerable<Actor> actors) : this(movie)
+        {
+            Actors = actors;
         }
     }
 }

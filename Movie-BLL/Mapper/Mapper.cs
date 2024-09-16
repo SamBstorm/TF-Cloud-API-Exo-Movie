@@ -49,6 +49,12 @@ namespace Movie_BLL.Mapper
             if (entity is null) throw new ArgumentNullException(nameof(entity));
             return new BLL.Movie(entity);
         }
+        public static BLL.Movie ToBLL(this DAL.Movie entity, IEnumerable<BLL.Actor> actors)
+        {
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
+            if (actors is null) throw new ArgumentNullException(nameof(actors));
+            return new BLL.Movie(entity, actors);
+        }
         #endregion
     }
 }
