@@ -31,9 +31,12 @@ namespace Movie_BLL.Entities
             }
         }
         public DateTime BirthDate { get; set; }
-        public Person(int personId, string lastName, string firstName, DateTime birthDate)
+        public Person(int personId, string lastName, string firstName, DateTime birthDate) : this(lastName,firstName,birthDate)
         {
             PersonId = personId;
+        }
+        public Person(string lastName, string firstName, DateTime birthDate)
+        {
             LastName = lastName;
             FirstName = firstName;
             BirthDate = birthDate;

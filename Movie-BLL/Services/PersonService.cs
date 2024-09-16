@@ -1,4 +1,5 @@
 ﻿using Movie_BLL.Entities;
+using Movie_BLL.Mapper;
 using Movie_Common.Repositories;
 using System;
 using System.Collections.Generic;
